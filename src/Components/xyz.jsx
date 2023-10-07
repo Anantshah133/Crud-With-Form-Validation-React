@@ -6,7 +6,8 @@ import DataTable from './DataTable';
 export default function CrudForm() {
     const [isSelected, setIsSelected] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
-    const [input, setInput] = useState({});
+    const [input, setInput] = useState({name: '', email: '', password: '', confirm: '', phone: '', degree: '',
+    state: '', city: '', gender: '', address: '', hobbies: '', });
     const [data, setData] = useState(() => {
         try {
             let storedData = localStorage.getItem("userData");
@@ -16,8 +17,9 @@ export default function CrudForm() {
             return [];
         }
     });
-    const [cities, setCities] = useState([])
     const [selectedState, setSelectedState] = useState('');
+    const [selectedGender, setSelectedGender] = useState('')
+    const [cities, setCities] = useState([])
     const [errors, setErrors] = useState({});
     const formRef = useRef(null);
 
@@ -32,17 +34,24 @@ export default function CrudForm() {
     }, [selectedState]);
 
     console.log(input)
+    const handleReset = () => {
+        setInput({name: '', email: '', password: '', confirm: '', phone: '', degree: '',
+            state: '', city: '', gender: '', address: '', hobbies: '', });
+        setSelectedGender('');
+        setErrors({});
+    }
     const handleChange = (e) => {
         setErrors({ ...errors, [e.target.name]: '' });
-        setInput({ ...input, [e.target.name]: e.target.value.trim() });
+        setInput({ ...input, [e.target.name]: e.target.value });
     }
     const handleStateChange = (e) => {
         setSelectedState(e.target.value);
         setIsSelected(e.target.value === '' ? false : true)
     }
     const handleEdit = (e, idx) => {
-        setInput(data[idx])
         setIsEdit(true);
+        setInput(data[idx])
+        setSelectedGender(data[idx].gender)
     }
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -52,39 +61,45 @@ export default function CrudForm() {
             setErrors({ ...errors, name: "Name is required !!!" })
             return;
         }
-
         if (!input.email) {
             setErrors({ ...errors, email: "Email is required !!!" })
             return;
         }
-
         if (!input.password) {
             setErrors({ ...errors, password: "Password is required !!!" })
             return;
         }
-
         if (input.confirm !== input.password) {
             setErrors({ ...errors, confirm: "Password do not match" })
             return;
         }
-
         if (!input.phone || input.phone.length < 10) {
             setErrors({ ...errors, phone: "Please Enter A Valid Phone Number !!!" })
             return;
         }
-
         if (!input.address) {
             setErrors({ ...errors, address: "Please Enter Your Address !!!" })
             return;
         }
-
         if (!input.hobbies) {
             setErrors({ ...errors, hobbies: "Please Enter your Hobbies !!!" })
             return;
         }
 
-        setData([...data, input])
-        setInput({})
+        if (isEdit) {
+            const newData = [...data];
+            const editId = newData.findIndex((item) => item.id === input.id);
+            if(editId !== -1){
+                newData[editId] = input;
+                setData(newData);
+            }
+            handleReset();
+            setIsEdit(false);
+        } else {
+            setData([...data, input])
+        }
+
+        handleReset()
         formRef.current.reset();
     }
 
@@ -93,15 +108,15 @@ export default function CrudForm() {
         <center>
             <h1 className='my-3'>Form here</h1>
             <form action="" onSubmit={handleSubmit} className='container' ref={formRef}>
-                
+
                 {/* --------------------- name & email ----------------------- */}
                 <div className='form-name row mt-2'>
                     <div className='col-lg-6'>
-                        <h5 className='text-start'><p>Name :</p> <input type="text" name="name" className='w-100' onChange={handleChange} required autoComplete='off' /></h5>
+                        <h5 className='text-start'><p>Name :</p> <input type="text" name="name" value={input.name || ''} className='w-100' onChange={handleChange} required autoComplete='off' /></h5>
                         {errors.name && <p className="text-danger fw-bold">{errors.name}</p>}
                     </div>
                     <div className='col-lg-6'>
-                        <h5 className='text-start'><p>Email :</p> <input type="email" name="email" className='w-100' onChange={handleChange} required autoComplete='off' /></h5>
+                        <h5 className='text-start'><p>Email :</p> <input type="email" name="email" value={input.email || ''} className='w-100' onChange={handleChange} required autoComplete='off' /></h5>
                         {errors.email && <p className="text-danger fw-bold">{errors.email}</p>}
                     </div>
                 </div>
@@ -109,11 +124,11 @@ export default function CrudForm() {
                 {/* --------------------- Password & Confirm Password ----------------------- */}
                 <div className='form-name row mt-2'>
                     <div className='col-lg-6'>
-                        <h5 className='text-start'><p>Password : </p><input type="password" name="password" className='w-100' onChange={handleChange} required /></h5>
+                        <h5 className='text-start'><p>Password : </p><input type="password" name="password" value={input.password || ''} className='w-100' onChange={handleChange} required /></h5>
                         {errors.password && <p className="text-danger fw-bold">{errors.password}</p>}
                     </div>
                     <div className='col-lg-6'>
-                        <h5 className='text-start'><p>Confirm : </p><input type="password" name="confirm" className='w-100' onChange={handleChange} required /></h5>
+                        <h5 className='text-start'><p>Confirm : </p><input type="password" name="confirm" value={input.confirm || ''} className='w-100' onChange={handleChange} required /></h5>
                         {errors.confirm && <p className="text-danger fw-bold">{errors.confirm}</p>}
                     </div>
                 </div>
@@ -121,13 +136,13 @@ export default function CrudForm() {
                 {/* --------------------- Phone & Degree ----------------------- */}
                 <div className='form-name row mt-2'>
                     <div className='col-lg-6'>
-                        <h5 className='text-start'><p>Mobile (10 digits) : </p><input type="tel" name="phone" className='w-100' onChange={handleChange} required pattern='[0-9]{10}' /></h5>
+                        <h5 className='text-start'><p>Mobile (10 digits) : </p><input type="tel" name="phone" value={input.phone || ''} className='w-100' onChange={handleChange} required pattern='[0-9]{10}' /></h5>
                         {errors.phone && <p className="text-danger fw-bold">{errors.phone}</p>}
                     </div>
                     <div className='col-lg-6'>
                         <h5 className='text-start'>
                             <p>Degree : </p>
-                            <select name="degree" className='w-100' required onChange={handleChange}>
+                            <select name="degree" value={input.degree || ''} className='w-100' required onChange={handleChange}>
                                 <option value="">Select Your Degree Here</option>
                                 <option value="BCA">BCA</option>
                                 <option value="MCA">MCA</option>
@@ -144,7 +159,7 @@ export default function CrudForm() {
                             <p>Select State & City : </p>
                             <div className='d-flex'>
                                 <div className="w-50 pe-3">
-                                    <select name="state" className='w-100' required onChange={handleStateChange}>
+                                    <select name="state" value={input.state || ''} className='w-100' required onChange={handleStateChange}>
                                         <option value="">Select Your State</option>
                                         {stateList.map((state, idx) =>
                                             (<option value={state} key={idx}>{state}</option>)
@@ -152,7 +167,7 @@ export default function CrudForm() {
                                     </select>
                                 </div>
                                 <div className="w-50">
-                                    <select name="city" className='w-100' required onChange={handleChange} value={input.city || ''} disabled={!isSelected}>
+                                    <select name="city" value={input.city || ''} className='w-100' required onChange={handleChange} disabled={!isSelected}>
                                         <option value="">Select Your City</option>
                                         {cities.map((city, idx) =>
                                             (<option value={city} key={idx}>{city}</option>)
@@ -166,11 +181,20 @@ export default function CrudForm() {
                     <div className="col-lg-6">
                         <h5 className='text-start'>
                             <p>Gender : </p>
-                            <input type="radio" name="gender" value="male" onClick={(e) => input.gender = e.target.value} required />
+                            <input type="radio" name="gender" checked={selectedGender === 'male'} value="male" onClick={(e) => {
+                                setSelectedGender(e.target.value)
+                                input.gender = e.target.value
+                            }} required />
                             <label className='mx-3' htmlFor="gender">Male</label>
-                            <input type="radio" name="gender" value="female" onClick={(e) => input.gender = e.target.value} required />
+                            <input type="radio" name="gender" checked={selectedGender === 'female'} value="female" onClick={(e) => {
+                                setSelectedGender(e.target.value)
+                                input.gender = e.target.value
+                            }} required />
                             <label className='mx-3' htmlFor="gender">Female</label>
-                            <input type="radio" name="gender" value="other" onClick={(e) => input.gender = e.target.value} required />
+                            <input type="radio" name="gender" checked={selectedGender === 'other'} value="other" onClick={(e) => {
+                                setSelectedGender(e.target.value)
+                                input.gender = e.target.value
+                            }} required />
                             <label className='mx-3' htmlFor="gender">Other</label>
                         </h5>
                     </div>
@@ -179,11 +203,11 @@ export default function CrudForm() {
                 {/* --------------------- Address & Hobbie ----------------------- */}
                 <div className='form-name row mt-2 align-items-center'>
                     <div className='col-lg-6'>
-                        <h5 className='text-start'><p>Address : </p> <textarea name="address" className='w-100' onChange={handleChange} required autoComplete='off' /></h5>
+                        <h5 className='text-start'><p>Address : </p> <textarea name="address" value={input.address || ''} className='w-100' onChange={handleChange} required autoComplete='off' /></h5>
                         {errors.address && <p className="text-danger fw-bold">{errors.address}</p>}
                     </div>
                     <div className='col-lg-6'>
-                        <h5 className='text-start'><p>Hobbies : </p> <input type="text" name="hobbies" className='w-100' onChange={handleChange} required autoComplete='off' /></h5>
+                        <h5 className='text-start'><p>Hobbies : </p> <input type="text" name="hobbies" value={input.hobbies || ''} className='w-100' onChange={handleChange} required autoComplete='off' /></h5>
                         {errors.hobbies && <p className="text-danger fw-bold">{errors.hobbies}</p>}
                     </div>
                 </div>
