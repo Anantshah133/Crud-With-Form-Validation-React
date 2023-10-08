@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
 
-export default function DataTable({ data, handleEdit, isEdit }) {
+export default function DataTable({ data, handleEdit, isEdit, handleDelete }) {
     return (
         <Table striped bordered hover variant="dark">
             <thead>
@@ -29,12 +29,16 @@ export default function DataTable({ data, handleEdit, isEdit }) {
                         <td>{userData.degree}</td>
                         <td>{userData.state}</td>
                         <td>{userData.city}</td>
-                        <td>{userData.gender === "male" ? "♂️ Male" : userData.gender === "female" ? "♀️ Female" : "X Other"}</td>
+                        <td>{userData.gender === "male" ? "♂️ Male" : userData.gender === "female" ? "♀️ Female" : "⚧ Other"}</td>
                         <td>{userData.hobbies}</td>
                         <td>{userData.address}</td>
                         <td>
-                            <button type='button' className='btn btn-success me-3' onClick={(e) => handleEdit(e, idx)}>Edit</button>
-                            <button type='button' className='btn btn-danger me-3' disabled={isEdit}>Delete</button>
+                            <button type='button' className='action-btn btn btn-success me-3' onClick={(e) => handleEdit(e, idx)}>
+                                <i className="ri-pencil-line"></i>
+                            </button>
+                            <button type='button' className='action-btn btn btn-danger me-3' onClick={(e) => handleDelete(e, idx)} disabled={isEdit}>
+                                <i className="ri-close-line"></i>
+                            </button>
                         </td>
                     </tr>
                 })}
