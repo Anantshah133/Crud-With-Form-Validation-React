@@ -59,7 +59,7 @@ export default function CrudForm() {
         setInput(data[idx])
         setSelectedGender(data[idx].gender)
         setSelectedState(data[idx].state)
-        setIsSelected(true)
+        setIsSelected(true);
     }
     const handleDelete = (e, idx) => {
         const newData = [...data];
@@ -69,27 +69,32 @@ export default function CrudForm() {
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors({});
+        const validationErrors = {};
 
         if (!input.name.trim()) {
-            setErrors({ ...errors, name: "Name is required !!!" })
-            return;
+            // setErrors({ ...errors, name: "Name is required !!!" })
+            // return;
+            validationErrors.name = "Name is required !!!!";
         }
         if (!input.email.trim()) {
-            setErrors({ ...errors, email: "Email is required !!!" })
-            return;
+            // setErrors({ ...errors, email: "Email is required !!!" })
+            // return;
+            validationErrors.email = "Email is required !!!";
         }
         if (!input.password.trim()) {
-            setErrors({ ...errors, password: "Password is required !!!" })
-            return;
+            // setErrors({ ...errors, password: "Password is required !!!" })
+            // return;
+            validationErrors.password = "Password is required !!!";
         }
         if (input.confirm !== input.password) {
-            setErrors({ ...errors, confirm: "Password do not match" })
-            return;
+            // setErrors({ ...errors, confirm: "Password do not match" })
+            // return;
+            validationErrors.confirm = "Password do not match";
         }
-        if (!input.phone.trim() || input.phone.trim().length < 10) {
-            setErrors({ ...errors, phone: "Please Enter A Valid Phone Number !!!" })
-            return;
-        }
+        // if (!input.phone.trim() || input.phone.trim().length < 10) {
+        //     setErrors({ ...errors, phone: "Please Enter A Valid Phone Number !!!" })
+        //     return;
+        // }
         if (!input.address.trim()) {
             setErrors({ ...errors, address: "Please Enter Your Address !!!" })
             return;
@@ -215,7 +220,7 @@ export default function CrudForm() {
                 </div>
 
                 {/* --------------------- Address & Hobbie ----------------------- */}
-                <div className='form-name row mt-2 align-items-center'>
+                <div className='form-name row mt-2 align-items-top'>
                     <div className='col-lg-6'>
                         <h5 className='text-start'><p>Address : </p> <textarea name="address" value={input.address || ''} className='w-100' onChange={handleChange} required autoComplete='off' /></h5>
                         {errors.address && <p className="text-danger fw-bold">{errors.address}</p>}

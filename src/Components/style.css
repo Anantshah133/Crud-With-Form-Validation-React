@@ -1,5 +1,5 @@
 input, select{
-    padding: 8px;
+    padding: 4px;
 }
 .btn-danger:disabled{
     cursor: not-allowed;
