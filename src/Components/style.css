@@ -24,4 +24,5 @@ textarea{
 }
 body{
     background-image: url('/public/map.png');
+    background-position: center center;
 }
