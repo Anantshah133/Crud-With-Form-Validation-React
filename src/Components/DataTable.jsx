@@ -3,7 +3,7 @@ import { Table } from 'react-bootstrap';
 
 export default function DataTable({ data, handleEdit, isEdit, handleDelete }) {
     return (
-        <Table striped bordered hover variant="dark">
+        <Table bordered hover striped variant="dark">
             <thead>
                 <tr>
                     <th>Name</th>

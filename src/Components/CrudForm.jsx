@@ -7,6 +7,11 @@ export default function CrudForm() {
     const [editId, setEditId] = useState(null);
     const [isSelected, setIsSelected] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
+    const [selectedState, setSelectedState] = useState('');
+    const [selectedGender, setSelectedGender] = useState('')
+    const [cities, setCities] = useState([])
+    const [errors, setErrors] = useState({});
+    const formRef = useRef(null);
     const [input, setInput] = useState({
         name: '', email: '', password: '', confirm: '', phone: '', degree: '',
         state: '', city: '', gender: '', address: '', hobbies: '',
@@ -20,11 +25,7 @@ export default function CrudForm() {
             return [];
         }
     });
-    const [selectedState, setSelectedState] = useState('');
-    const [selectedGender, setSelectedGender] = useState('')
-    const [cities, setCities] = useState([])
-    const [errors, setErrors] = useState({});
-    const formRef = useRef(null);
+    
 
     useEffect(() => {
         // console.log(data)
@@ -68,39 +69,34 @@ export default function CrudForm() {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        setErrors({});
         const validationErrors = {};
 
         if (!input.name.trim()) {
-            // setErrors({ ...errors, name: "Name is required !!!" })
-            // return;
             validationErrors.name = "Name is required !!!!";
         }
-        if (!input.email.trim()) {
-            // setErrors({ ...errors, email: "Email is required !!!" })
-            // return;
-            validationErrors.email = "Email is required !!!";
-        }
         if (!input.password.trim()) {
-            // setErrors({ ...errors, password: "Password is required !!!" })
-            // return;
             validationErrors.password = "Password is required !!!";
         }
         if (input.confirm !== input.password) {
-            // setErrors({ ...errors, confirm: "Password do not match" })
-            // return;
             validationErrors.confirm = "Password do not match";
         }
+        if (!input.address.trim()) {
+            validationErrors.address = "Please Enter Your Address !!!";
+        }
+        if (!input.hobbies.trim()) {
+            validationErrors.hobbies = "Please Enter your Hobbies !!!";
+        }
+        // if (!input.email.trim()) {
+        //     validationErrors.email = "Email is required !!!";
+        // }
         // if (!input.phone.trim() || input.phone.trim().length < 10) {
         //     setErrors({ ...errors, phone: "Please Enter A Valid Phone Number !!!" })
         //     return;
         // }
-        if (!input.address.trim()) {
-            setErrors({ ...errors, address: "Please Enter Your Address !!!" })
-            return;
-        }
-        if (!input.hobbies.trim()) {
-            setErrors({ ...errors, hobbies: "Please Enter your Hobbies !!!" })
+
+        setErrors(validationErrors);
+
+        if(Object.keys(validationErrors).length > 0){
             return;
         }
 
@@ -114,6 +110,8 @@ export default function CrudForm() {
             setData(newList);
             handleReset();
             setIsEdit(false);
+            setIsSelected(false);
+            setSelectedState('');
         } else {
             setData([...data, input])
         }
@@ -125,7 +123,8 @@ export default function CrudForm() {
     const stateList = Object.keys(cityData);
     return (
         <center>
-            <h1 className='my-3'>CRUD With Local-Storage</h1>
+            <h1 className='my-3 text-primary'>CRUD With Local-Storage</h1>
+            <br />
             <form action="" onSubmit={handleSubmit} className='container' ref={formRef}>
 
                 {/* --------------------- name & email ----------------------- */}
@@ -236,7 +235,7 @@ export default function CrudForm() {
 
                 <div className="col-12 overflow-x-scroll mt-4 data-table">
                     {
-                        data.length > 0 ? <DataTable data={data} handleEdit={handleEdit} isEdit={isEdit} handleDelete={handleDelete} /> : <h3 className='text-success'>No Data Available</h3>
+                        data.length > 0 ? <DataTable data={data} handleEdit={handleEdit} isEdit={isEdit} handleDelete={handleDelete} /> : <h3 className='text-primary'>No Data Available</h3>
                     }
                 </div>
             </form>
