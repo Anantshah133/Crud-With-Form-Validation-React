@@ -154,7 +154,7 @@ export default function CrudForm() {
                 {/* --------------------- Phone & Degree ----------------------- */}
                 <div className='form-name row mt-2'>
                     <div className='col-lg-6'>
-                        <h5 className='text-start'><p>Mobile (10 digits) : </p><input type="tel" name="phone" value={input.phone || ''} className='w-100' onChange={handleChange} required pattern='[0-9]{10}' /></h5>
+                        <h5 className='text-start'><p>Mobile (10 digits) : </p><input type="tel" name="phone" value={input.phone || ''} className='w-100' onChange={handleChange} autoComplete='off' required pattern='[0-9]{10}' /></h5>
                         {errors.phone && <p className="text-danger fw-bold">{errors.phone}</p>}
                     </div>
                     <div className='col-lg-6'>
