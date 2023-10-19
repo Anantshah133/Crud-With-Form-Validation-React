@@ -1,8 +1,11 @@
-import CrudForm from "./Components/CrudForm";
+
+import MainComponent from "./Components/MainComponent";
 
 function App() {
   return (
-    <CrudForm />
+    <>
+      <MainComponent />
+    </>
   );
 }
 

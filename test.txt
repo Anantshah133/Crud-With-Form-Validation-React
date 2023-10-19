@@ -1,0 +1,10 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import CrudForm from "./Components/CrudForm";
+import Error404Page from "./Components/Error404Page";
+
+<BrowserRouter>
+        <Routes>
+          <Route path="/add-data" element={<CrudForm />}></Route>
+          <Route path="*" element={<Error404Page />}></Route>
+        </Routes>
+      </BrowserRouter>

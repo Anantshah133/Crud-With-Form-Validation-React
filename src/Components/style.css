@@ -1,28 +1,36 @@
-input, select{
+input,
+select {
     padding: 4px;
 }
-.btn-danger:disabled{
+
+.btn-danger:disabled {
     cursor: not-allowed;
     pointer-events: all !important;
 }
-.btn-danger{
+
+.btn-danger {
     z-index: 10;
 }
-textarea{
+
+textarea {
     padding: 10px;
 }
 
-.action-btn{
+.action-btn {
     width: 40px;
     height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
 .data-table::-webkit-scrollbar {
     display: none;
 }
-body{
+
+body {
     background-image: url('/public/map.png');
     background-position: center center;
 }
+
+
