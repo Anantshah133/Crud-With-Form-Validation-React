@@ -3,6 +3,11 @@ select {
     padding: 4px;
 }
 
+body {
+    background-image: url('/public/map.png');
+    background-position: center center;
+}
+
 .btn-danger:disabled {
     cursor: not-allowed;
     pointer-events: all !important;
@@ -27,10 +32,3 @@ textarea {
 .data-table::-webkit-scrollbar {
     display: none;
 }
-
-body {
-    background-image: url('/public/map.png');
-    background-position: center center;
-}
-
-
