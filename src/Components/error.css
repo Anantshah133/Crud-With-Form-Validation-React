@@ -34,12 +34,16 @@ body{
     text-decoration: none;
     color: #fff !important;
     padding: 10px 20px;
-    background: #39ac31;
+    background: #31285c;
     margin: 20px 0;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     display: inline-block;
+    border-radius: 2px;
 }
 .link_404:hover {
-    background: #53904e;
+    background: white;
+    border: 1px solid #31285c;
+    color: black !important;
 }
 
 .contant_box_404 {
