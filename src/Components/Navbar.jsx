@@ -1,8 +1,31 @@
 import React from 'react'
 import "./style.css";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
-export default function Navbar() {
+export default function Navbar({ isLoggedIn, handleLogout }) {
+    const navigate = useNavigate();
+    const onLogout = () => {
+        Swal.fire({
+            title: 'Do You Want To Log-Out ?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#31285c',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yess Log-Out'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'User Logged Out',
+                    'U will be redirected to the Home Shortly',
+                    'success'
+                )
+                navigate('/')
+                handleLogout()
+            }
+        })
+    }
     return (
         <nav className="navbar navbar-expand-lg navbar-dark p-3" style={{ backgroundColor: "#31285c" }}>
             <div className="container-fluid">
@@ -32,18 +55,24 @@ export default function Navbar() {
                             <Link href='/' className="nav-link">Link</Link>
                         </li>
                     </ul>
-                    <form className="d-flex gap-4" role="search">
-                        <Link to={'/login'} className='text-decoration-none text-white'>
-                            <button className="btn btn-outline-light" type="submit">
-                                Log-in <i className="fa-solid fa-user fs-14 ms-2"></i>
-                            </button>
-                        </Link>
-                        <Link to={'/sign-up'} className='text-decoration-none text-white'>
-                            <button className="btn btn-outline-light" type="submit">
-                                Sign-Up <i className="fa-solid fa-right-to-bracket fs-14 ms-2"></i>
-                            </button>
-                        </Link>
-                    </form>
+                    {isLoggedIn ? (
+                        <button className="btn btn-outline-light" type="button" onClick={onLogout}>
+                            Logout <i className="fa-solid fa-sign-out fs-14 ms-2"></i>
+                        </button>
+                    ) : (
+                        <form className="d-flex gap-4" role="search">
+                            <Link to={'/login'} className='text-decoration-none text-white'>
+                                <button className="btn btn-outline-light" type="submit">
+                                    Log-in <i className="fa-solid fa-user fs-14 ms-2"></i>
+                                </button>
+                            </Link>
+                            <Link to={'/sign-up'} className='text-decoration-none text-white'>
+                                <button className="btn btn-outline-light" type="submit">
+                                    Sign-Up <i className="fa-solid fa-right-to-bracket fs-14 ms-2"></i>
+                                </button>
+                            </Link>
+                        </form>
+                    )}
                 </div>
             </div>
         </nav>

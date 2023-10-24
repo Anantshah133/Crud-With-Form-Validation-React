@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
-export default function LoginPage() {
+export default function LoginPage({ handleLogin }) {
     const [input, setInput] = useState({ email: '', password: '' });
     const handleChange = (e) => {
         setErrors({ ...errors, [e.target.id]: '' })
@@ -33,7 +33,7 @@ export default function LoginPage() {
                     icon: 'success',
                     title: 'User Logged In Successfully !',
                     html: 'You will Shortly Redirected To the Home Page',
-                    timer: 2000,
+                    timer: 1500,
                     timerProgressBar: false,
                     didOpen: () => {
                         Swal.showLoading()
@@ -42,7 +42,10 @@ export default function LoginPage() {
                     willClose: () => {
                         clearInterval(timerInterval)
                     }
-                }).then((result) => {navigate('/add-data')})
+                }).then((result) => {
+                    handleLogin()
+                    navigate('/add-data')
+                })
             } else {
                 Swal.fire({
                     icon: 'error',
@@ -61,8 +64,6 @@ export default function LoginPage() {
             setInput({ email: '', password: '' })
         }
     }
-    // console.log(input)
-    // console.log(userData)
     return (
         <form className="login-wrapper" onSubmit={handleSubmit}>
             <div className="wrapper">
