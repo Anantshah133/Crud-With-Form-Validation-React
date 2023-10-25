@@ -5,6 +5,10 @@ import Error404Page from "./Error404Page";
 import Navbar from './Navbar';
 import LoginPage from './LoginPage';
 import SignUpPage from './SignUpPage';
+import Home from './Home';
+import Dashboard from './Dashboard';
+import StudentsTable from './StudentsTable';
+import ViewStudent from './ViewStudent';
 
 export default function MainComponent() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
@@ -30,10 +34,14 @@ export default function MainComponent() {
     <BrowserRouter>
       <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
       <Routes>
-        <Route path='/sign-up' element={<SignUpPage />}></Route>
-        <Route path='/login' element={<LoginPage handleLogin={handleLogin} />}></Route>
-        <Route path="/add-data" element={<CrudForm />}></Route>
-        <Route path="*" element={<Error404Page />}></Route>
+        <Route path="*" element={<Error404Page />} />
+        <Route path='/' element={<Home />} />
+        <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='/sign-up' element={<SignUpPage />} />
+        <Route path='/login' element={<LoginPage handleLogin={handleLogin} />} />
+        <Route path="/add-student" element={<CrudForm />} />
+        <Route path='/students' element={<StudentsTable />} />
+        <Route path='/students/view/:id' element={<ViewStudent />} />
       </Routes>
     </BrowserRouter>
   )

@@ -44,7 +44,7 @@ export default function LoginPage({ handleLogin }) {
                     }
                 }).then((result) => {
                     handleLogin()
-                    navigate('/add-data')
+                    navigate('/add-student')
                 })
             } else {
                 Swal.fire({

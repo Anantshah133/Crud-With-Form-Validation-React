@@ -1,9 +1,10 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
-export default function DataTable({ data, handleEdit, isEdit, handleDelete }) {
+export default function DataTable({ data, handleDelete }) {
     return (
-        <Table bordered hover striped variant="dark">
+        <Table bordered hover striped variant="dark" className='text-center'>
             <thead>
                 <tr>
                     <th>Name</th>
@@ -33,10 +34,13 @@ export default function DataTable({ data, handleEdit, isEdit, handleDelete }) {
                         <td>{userData.hobbies}</td>
                         <td>{userData.address}</td>
                         <td>
-                            <button type='button' className='action-btn btn btn-success me-3' onClick={(e) => handleEdit(e, idx)}>
+                            <Link type='button' className='action-btn btn btn-warning me-3' to={`/students/view/${idx}`}>
+                                <i className="fa-solid fa-eye"></i>
+                            </Link>
+                            <button type='button' className='action-btn btn btn-success me-3'>
                                 <i className="ri-pencil-line"></i>
                             </button>
-                            <button type='button' className='action-btn btn btn-danger me-3' onClick={(e) => handleDelete(e, idx)} disabled={isEdit}>
+                            <button type='button' className='action-btn btn btn-danger me-3' onClick={(e) => handleDelete(e, idx)}>
                                 <i className="ri-close-line"></i>
                             </button>
                         </td>

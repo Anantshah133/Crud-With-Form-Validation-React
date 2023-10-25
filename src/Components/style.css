@@ -25,7 +25,7 @@ textarea {
 .action-btn {
     width: 40px;
     height: 40px;
-    display: flex;
+    display: inline-flex !important;
     align-items: center;
     justify-content: center;
 }
@@ -365,4 +365,19 @@ p {
 .swal-button{
     background-color: #31285c !important;
     color: #fff;
+}
+
+
+.color-primary{
+    color: #31285C;
+}
+.background-primary{
+    background-color: #31285C !important;
+    color: white !important;
+    border: 1px solid #31285C !important;
+}
+.background-primary:hover{
+    color: #31285C !important;
+    background-color: #fff !important;
+    border: 1px solid #31285C;
 }

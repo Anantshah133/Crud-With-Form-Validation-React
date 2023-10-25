@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
 import cityData from './cityData';
 import "../Components/style.css";
-import DataTable from './DataTable';
+// import DataTable from './DataTable';
 
 export default function CrudForm() {
-    const [editId, setEditId] = useState(null);
+    // const [editId, setEditId] = useState(null);
     const [isSelected, setIsSelected] = useState(false);
-    const [isEdit, setIsEdit] = useState(false);
+    // const [isEdit, setIsEdit] = useState(false);
     const [selectedState, setSelectedState] = useState('');
     const [selectedGender, setSelectedGender] = useState('')
     const [cities, setCities] = useState([])
@@ -18,7 +18,7 @@ export default function CrudForm() {
     });
     const [data, setData] = useState(() => {
         try {
-            let storedData = localStorage.getItem("userData");
+            let storedData = localStorage.getItem("Student-Data");
             return JSON.parse(storedData) ? JSON.parse(storedData) : [];
         } catch (error) {
             console.error("Error While Parsing data from Local storage ...");
@@ -28,8 +28,7 @@ export default function CrudForm() {
     
 
     useEffect(() => {
-        // console.log(data)
-        localStorage.setItem("userData", JSON.stringify(data))
+        localStorage.setItem("Student-Data", JSON.stringify(data))
     }, [data]);
     useEffect(() => {
         // setInput({ ...input, state: selectedState }) // occuring warning
@@ -37,13 +36,13 @@ export default function CrudForm() {
         setInput((prevInput) => ({ ...prevInput, state: selectedState }));
     }, [selectedState]);
 
-    // console.log(input)
     const handleReset = () => {
         setInput({
             name: '', email: '', password: '', confirm: '', phone: '', degree: '',
             state: '', city: '', gender: '', address: '', hobbies: '',
         });
         setSelectedGender('');
+        setSelectedState('');
         setErrors({});
     }
     const handleChange = (e) => {
@@ -54,19 +53,14 @@ export default function CrudForm() {
         setSelectedState(e.target.value);
         setIsSelected(e.target.value === '' ? false : true)
     }
-    const handleEdit = (e, idx) => {
-        setEditId(idx)
-        setIsEdit(true);
-        setInput(data[idx])
-        setSelectedGender(data[idx].gender)
-        setSelectedState(data[idx].state)
-        setIsSelected(true);
-    }
-    const handleDelete = (e, idx) => {
-        const newData = [...data];
-        newData.splice(idx, 1);
-        setData(newData)
-    }
+    // const handleEdit = (e, idx) => {
+    //     setEditId(idx)
+    //     setIsEdit(true);
+    //     setInput(data[idx])
+    //     setSelectedGender(data[idx].gender)
+    //     setSelectedState(data[idx].state)
+    //     setIsSelected(true);
+    // }
     const handleSubmit = (e) => {
         e.preventDefault();
         const validationErrors = {};
@@ -86,13 +80,6 @@ export default function CrudForm() {
         if (!input.hobbies.trim()) {
             validationErrors.hobbies = "Please Enter your Hobbies !!!";
         }
-        // if (!input.email.trim()) {
-        //     validationErrors.email = "Email is required !!!";
-        // }
-        // if (!input.phone.trim() || input.phone.trim().length < 10) {
-        //     setErrors({ ...errors, phone: "Please Enter A Valid Phone Number !!!" })
-        //     return;
-        // }
 
         setErrors(validationErrors);
 
@@ -100,21 +87,21 @@ export default function CrudForm() {
             return;
         }
 
-        if (isEdit) {
-            const newList = data.map((user, idx) => {
-                if (editId === idx) {
-                    return input;
-                }
-                return user;
-            })
-            setData(newList);
-            handleReset();
-            setIsEdit(false);
-            setIsSelected(false);
-            setSelectedState('');
-        } else {
-            setData([...data, input])
-        }
+        // if (isEdit) {
+        //     const newList = data.map((user, idx) => {
+        //         if (editId === idx) {
+        //             return input;
+        //         }
+        //         return user;
+        //     })
+        //     setData(newList);
+        //     handleReset();
+        //     setIsEdit(false);
+        //     setIsSelected(false);
+        //     setSelectedState('');
+        // } else {
+        setData([...data, input])
+        // }
 
         handleReset()
         formRef.current.reset();
@@ -123,18 +110,17 @@ export default function CrudForm() {
     const stateList = Object.keys(cityData);
     return (
         <center>
-            <h1 className='my-3 text-primary'>CRUD With Local-Storage</h1>
+            <h1 className='my-3 color-primary'>Add Student Data</h1>
             <br />
             <form action="" onSubmit={handleSubmit} className='container' ref={formRef}>
-
                 {/* --------------------- name & email ----------------------- */}
                 <div className='form-name row mt-2'>
                     <div className='col-lg-6'>
-                        <h5 className='text-start'><p>Name :</p> <input type="text" name="name" value={input.name || ''} className='w-100' onChange={handleChange} required autoComplete='off' /></h5>
+                        <h5 className='text-start'><p className='text-dark'>Name :</p> <input type="text" name="name" value={input.name || ''} className='w-100' onChange={handleChange} required autoComplete='off' /></h5>
                         {errors.name && <p className="text-danger fw-bold">{errors.name}</p>}
                     </div>
                     <div className='col-lg-6'>
-                        <h5 className='text-start'><p>Email :</p> <input type="email" name="email" value={input.email || ''} className='w-100' onChange={handleChange} required autoComplete='off' /></h5>
+                        <h5 className='text-start'><p className='text-dark'>Email :</p> <input type="email" name="email" value={input.email || ''} className='w-100' onChange={handleChange} required autoComplete='off' /></h5>
                         {errors.email && <p className="text-danger fw-bold">{errors.email}</p>}
                     </div>
                 </div>
@@ -142,11 +128,11 @@ export default function CrudForm() {
                 {/* --------------------- Password & Confirm Password ----------------------- */}
                 <div className='form-name row mt-2'>
                     <div className='col-lg-6'>
-                        <h5 className='text-start'><p>Password : </p><input type="password" name="password" value={input.password || ''} className='w-100' onChange={handleChange} required /></h5>
+                        <h5 className='text-start'><p className='text-dark'>Password : </p><input type="password" name="password" value={input.password || ''} className='w-100' onChange={handleChange} required /></h5>
                         {errors.password && <p className="text-danger fw-bold">{errors.password}</p>}
                     </div>
                     <div className='col-lg-6'>
-                        <h5 className='text-start'><p>Confirm : </p><input type="password" name="confirm" value={input.confirm || ''} className='w-100' onChange={handleChange} required /></h5>
+                        <h5 className='text-start'><p className='text-dark'>Confirm : </p><input type="password" name="confirm" value={input.confirm || ''} className='w-100' onChange={handleChange} required /></h5>
                         {errors.confirm && <p className="text-danger fw-bold">{errors.confirm}</p>}
                     </div>
                 </div>
@@ -154,12 +140,12 @@ export default function CrudForm() {
                 {/* --------------------- Phone & Degree ----------------------- */}
                 <div className='form-name row mt-2'>
                     <div className='col-lg-6'>
-                        <h5 className='text-start'><p>Mobile (10 digits) : </p><input type="tel" name="phone" value={input.phone || ''} className='w-100' onChange={handleChange} autoComplete='off' required pattern='[0-9]{10}' /></h5>
+                        <h5 className='text-start'><p className='text-dark'>Mobile (10 digits) : </p><input type="tel" name="phone" value={input.phone || ''} className='w-100' onChange={handleChange} autoComplete='off' required pattern='[0-9]{10}' /></h5>
                         {errors.phone && <p className="text-danger fw-bold">{errors.phone}</p>}
                     </div>
                     <div className='col-lg-6'>
                         <h5 className='text-start'>
-                            <p>Degree : </p>
+                            <p className='text-dark'>Degree : </p>
                             <select name="degree" value={input.degree || ''} className='w-100' required onChange={handleChange}>
                                 <option value="">Select Your Degree Here</option>
                                 <option value="BCA">BCA</option>
@@ -174,7 +160,7 @@ export default function CrudForm() {
                 <div className='form-name row mt-2'>
                     <div className='col-lg-6'>
                         <h5 className='text-start'>
-                            <p>Select State & City : </p>
+                            <p className='text-dark'>Select State & City : </p>
                             <div className='d-flex'>
                                 <div className="w-50 pe-3">
                                     <select name="state" value={input.state || ''} className='w-100' required onChange={handleStateChange}>
@@ -198,7 +184,7 @@ export default function CrudForm() {
 
                     <div className="col-lg-6">
                         <h5 className='text-start'>
-                            <p>Gender : </p>
+                            <p className='text-dark'>Gender : </p>
                             <input type="radio" name="gender" checked={selectedGender === 'male'} value="male" onChange={(e) => {
                                 setSelectedGender(e.target.value)
                                 input.gender = e.target.value
@@ -221,23 +207,23 @@ export default function CrudForm() {
                 {/* --------------------- Address & Hobbie ----------------------- */}
                 <div className='form-name row mt-2 align-items-top'>
                     <div className='col-lg-6'>
-                        <h5 className='text-start'><p>Address : </p> <textarea name="address" value={input.address || ''} className='w-100' onChange={handleChange} required autoComplete='off' /></h5>
+                        <h5 className='text-start'><p className='text-dark'>Address : </p> <textarea name="address" value={input.address || ''} className='w-100' onChange={handleChange} required autoComplete='off' /></h5>
                         {errors.address && <p className="text-danger fw-bold">{errors.address}</p>}
                     </div>
                     <div className='col-lg-6'>
-                        <h5 className='text-start'><p>Hobbies : </p> <input type="text" name="hobbies" value={input.hobbies || ''} className='w-100' onChange={handleChange} required autoComplete='off' /></h5>
+                        <h5 className='text-start'><p className='text-dark'>Hobbies : </p> <input type="text" name="hobbies" value={input.hobbies || ''} className='w-100' onChange={handleChange} required autoComplete='off' /></h5>
                         {errors.hobbies && <p className="text-danger fw-bold">{errors.hobbies}</p>}
                     </div>
                 </div>
 
 
-                <button className='btn btn-primary mt-5' type='submit'>{isEdit ? 'Update' : 'Add Data'}</button>
+                <button className='btn btn-primary background-primary mt-5' type='submit'>{"Submit"}</button>
 
-                <div className="col-12 overflow-x-scroll mt-4 data-table">
+                {/* <div className="col-12 overflow-x-scroll mt-4 data-table">
                     {
-                        data.length > 0 ? <DataTable data={data} handleEdit={handleEdit} isEdit={isEdit} handleDelete={handleDelete} /> : <h3 className='text-primary'>No Data Available</h3>
+                        data.length > 0 ? <DataTable data={data} handleEdit={handleEdit} isEdit={isEdit} handleDelete={handleDelete} /> : <h3 className='color-primary'>No Data Available</h3>
                     }
-                </div>
+                </div> */}
             </form>
         </center>
     )

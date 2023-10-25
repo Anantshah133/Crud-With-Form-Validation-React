@@ -49,10 +49,7 @@ export default function Navbar({ isLoggedIn, handleLogout }) {
                             <Link className="nav-link active" aria-current="page" to={'/'}>Home</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to={'/add-data'}>Link</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link href='/' className="nav-link">Link</Link>
+                            <Link className="nav-link active" aria-current="page" to={'/students'}>Students</Link>
                         </li>
                     </ul>
                     {isLoggedIn ? (
