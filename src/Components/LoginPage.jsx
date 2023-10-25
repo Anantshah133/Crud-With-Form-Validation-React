@@ -61,7 +61,6 @@ export default function LoginPage({ handleLogin }) {
                     footer: `Dont Have An Account <a href='/sign-up'>Sign-up</a>`
                 })
             }
-            setInput({ email: '', password: '' })
         }
     }
     return (
@@ -83,7 +82,7 @@ export default function LoginPage({ handleLogin }) {
                 </div>
                 <div className="input-group row">
                     <div className="row">
-                        <Link to={'/login'} >Forgot Password</Link>
+                        <Link to={'/login'}>Forgot Password</Link>
                     </div>
                 </div>
                 <div className="input-group">
