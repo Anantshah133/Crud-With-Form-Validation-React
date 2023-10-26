@@ -4,15 +4,15 @@ import "../Components/style.css";
 import { useNavigate } from 'react-router-dom';
 
 export default function CrudForm() {
-    const [isSelected, setIsSelected] = useState(false);
     const navigate = useNavigate();
+    const [isSelected, setIsSelected] = useState(false);
     const [selectedState, setSelectedState] = useState('');
     const [selectedGender, setSelectedGender] = useState('')
     const [cities, setCities] = useState([])
     const [errors, setErrors] = useState({});
     const formRef = useRef(null);
     const [input, setInput] = useState({
-        name: '', email: '', password: '', confirm: '', phone: '', degree: '',
+        name: '', email: '', date: '', marks: '', phone: '', degree: '',
         state: '', city: '', gender: '', address: '', hobbies: '',
     });
     const [data, setData] = useState(() => {
@@ -33,7 +33,7 @@ export default function CrudForm() {
 
     const handleReset = () => {
         setInput({
-            name: '', email: '', password: '', confirm: '', phone: '', degree: '',
+            name: '', email: '', date: '', marks: '', phone: '', degree: '',
             state: '', city: '', gender: '', address: '', hobbies: '',
         });
         setSelectedGender('');
@@ -48,6 +48,7 @@ export default function CrudForm() {
         setSelectedState(e.target.value);
         setIsSelected(e.target.value === '' ? false : true)
     }
+    console.log(input)
     // const handleEdit = (e, idx) => {
     //     setEditId(idx)
     //     setIsEdit(true);
@@ -63,11 +64,11 @@ export default function CrudForm() {
         if (!input.name.trim()) {
             validationErrors.name = "Name is required !!!!";
         }
-        if (!input.password.trim()) {
-            validationErrors.password = "Password is required !!!";
+        if (!input.date.trim()) {
+            validationErrors.date = "Date is required !!!";
         }
-        if (input.confirm !== input.password) {
-            validationErrors.confirm = "Password do not match";
+        if (!input.marks.trim()) {
+            validationErrors.marks = "Please Enter The Students Marks !!!";
         }
         if (!input.address.trim()) {
             validationErrors.address = "Please Enter Your Address !!!";
@@ -121,15 +122,15 @@ export default function CrudForm() {
                     </div>
                 </div>
 
-                {/* --------------------- Password & Confirm Password ----------------------- */}
+                {/* --------------------- date & marks date ----------------------- */}
                 <div className='form-name row mt-2'>
                     <div className='col-lg-6'>
-                        <h5 className='text-start'><p className='text-dark'>Password : </p><input type="password" name="password" value={input.password || ''} className='w-100' onChange={handleChange} required /></h5>
-                        {errors.password && <p className="text-danger fw-bold">{errors.password}</p>}
+                        <h5 className='text-start'><p className='text-dark'>Date of Birth : </p><input type="date" name="date" value={input.date || ''} className='w-100' onChange={handleChange} required /></h5>
+                        {errors.date && <p className="text-danger fw-bold">{errors.date}</p>}
                     </div>
                     <div className='col-lg-6'>
-                        <h5 className='text-start'><p className='text-dark'>Confirm : </p><input type="password" name="confirm" value={input.confirm || ''} className='w-100' onChange={handleChange} required /></h5>
-                        {errors.confirm && <p className="text-danger fw-bold">{errors.confirm}</p>}
+                        <h5 className='text-start'><p className='text-dark'>Marks : </p><input type="number" name="marks" value={input.marks || ''} className='w-100' onChange={handleChange} required min={0} max={100} /></h5>
+                        {errors.marks && <p className="text-danger fw-bold">{errors.marks}</p>}
                     </div>
                 </div>
 

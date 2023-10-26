@@ -4,90 +4,80 @@ import "./view-student.css"
 
 export default function ViewStudent() {
     const urlParam = useParams();
-    console.log(urlParam)
+    const idx = urlParam.id;
+    let storedData = localStorage.getItem("Student-Data");
+    const studentData = JSON.parse(storedData) ? JSON.parse(storedData) : [];
+    const student = studentData[idx]
+
+    console.log(student)
     return (
-        <div className='mt-3 d-flex align-items-center justify-content-center'>
-            <div class="col-6">
-                <div class="card dashboard-card-ten pb-0">
-                    <div class="card-body">
-                        <div class="heading-layout1">
-                            <div class="item-title">
-                                <h3 className='color-primary fw-bold'>About The Student</h3>
-                            </div>
-                        </div>
-                        <div class="student-info">
-                            <div class="media media-none--xs">
-                                <div class="item-img">
-                                    <img src="img/figure/student.png" class="media-img-auto" alt="student" />
-                                </div>
-                                <div class="media-body">
-                                    <h3 class="item-title">Jessia Rose</h3>
-                                    <p>Aliquam erat volutpat. Curabiene natis massa
-                                        sedde lacustiquen sodale word moun taiery.</p>
+        <div className='bg-normal wrapper-of-view'>
+            <div className='d-flex align-items-center justify-content-center'>
+                <div className="col-6">
+                    <div className="card dashboard-card-ten pb-0">
+                        <div className="card-body">
+                            <div className="heading-layout1">
+                                <div className="item-title">
+                                    <h3 className='color-primary mb-4 fw-bold'>About The Student : -</h3>
                                 </div>
                             </div>
-                            <div class="table-responsive info-table">
-                                <table class="table text-nowrap">
-                                    <tbody>
-                                        <tr>
-                                            <td>Name:</td>
-                                            <td class="font-medium text-dark-medium">Jessia Rose</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Gender:</td>
-                                            <td class="font-medium text-dark-medium">Female</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Father Name:</td>
-                                            <td class="font-medium text-dark-medium">Fahim Rahman</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mother Name:</td>
-                                            <td class="font-medium text-dark-medium">Jannatul Kazi</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Date Of Birth:</td>
-                                            <td class="font-medium text-dark-medium">07.08.2006</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Religion:</td>
-                                            <td class="font-medium text-dark-medium">Islam</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Father Occupation:</td>
-                                            <td class="font-medium text-dark-medium">Graphic Designer</td>
-                                        </tr>
-                                        <tr>
-                                            <td>E-Mail:</td>
-                                            <td class="font-medium text-dark-medium">jessiarose@gmail.com</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Admission Date:</td>
-                                            <td class="font-medium text-dark-medium">05.01.2019</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Class:</td>
-                                            <td class="font-medium text-dark-medium">2</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Section:</td>
-                                            <td class="font-medium text-dark-medium">Pink</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Roll:</td>
-                                            <td class="font-medium text-dark-medium">10005</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Adress:</td>
-                                            <td class="font-medium text-dark-medium">House #10, Road #6,
-                                                Australia</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Phone:</td>
-                                            <td class="font-medium text-dark-medium">+ 88 9856418</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <div className="student-info">
+                                <div className="media media-none--xs mb-4">
+                                    <div className="item-img">
+                                        <img src="https://cdn-icons-png.flaticon.com/512/1154/1154987.png" className="media-img-auto" alt="student" />
+                                    </div>
+                                    <div className="media-body">
+                                        <h3 className="item-title color-secondary">{student.name}</h3>
+                                        <p>Aliquam erat volutpat. Curabiene natis massa
+                                            sedde lacustiquen sodale word moun taiery.</p>
+                                    </div>
+                                </div>
+                                <div className="table-responsive info-table">
+                                    <table className="table text-nowrap">
+                                        <tbody>
+                                            <tr>
+                                                <td className='color-primary fs-5'>Name : </td>
+                                                <td className="font-medium text-dark-medium">{student.name}</td>
+                                            </tr>
+                                            <tr>
+                                                <td className='color-primary fs-5'>Gender : </td>
+                                                <td className="font-medium text-dark-medium">{student.gender.toUpperCase()}</td>
+                                            </tr>
+                                            <tr>
+                                                <td className='color-primary fs-5'>Date Of Birth : </td>
+                                                <td className="font-medium text-dark-medium">{student.date}</td>
+                                            </tr>
+                                            <tr>
+                                                <td className='color-primary fs-5'>E-Mail : </td>
+                                                <td className="font-medium text-dark-medium">{student.email}</td>
+                                            </tr>
+                                            <tr>
+                                                <td className='color-primary fs-5'>Adress : </td>
+                                                <td className="font-medium text-dark-medium">{student.address}</td>
+                                            </tr>
+                                            <tr>
+                                                <td className='color-primary fs-5'>Course : </td>
+                                                <td className="font-medium text-dark-medium">{student.degree}</td>
+                                            </tr>
+                                            <tr>
+                                                <td className='color-primary fs-5'>Marks : </td>
+                                                <td className="font-medium text-dark-medium">{student.marks}</td>
+                                            </tr>
+                                            <tr>
+                                                <td className='color-primary fs-5'>Phone : </td>
+                                                <td className="font-medium text-dark-medium">{student.phone}</td>
+                                            </tr>
+                                            <tr>
+                                                <td className='color-primary fs-5'>City : </td>
+                                                <td className="font-medium text-dark-medium">{student.city}</td>
+                                            </tr>
+                                            <tr>
+                                                <td className='color-primary fs-5'>State : </td>
+                                                <td className="font-medium text-dark-medium">{student.state}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>

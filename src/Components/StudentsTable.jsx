@@ -23,7 +23,7 @@ export default function StudentsTable() {
     }
     return (
         <>
-            <h1 className='color-primary my-3 text-center'>Students List</h1>
+            <h1 className='color-primary mt-5 text-center'>Students List</h1>
             <div className="col-10 mx-auto mt-5 overflow-x-scroll mt-4 data-table">
                 {
                     data.length > 0 ? <DataTable data={data} handleDelete={handleDelete} /> : <h3 className='color-secondary text-center'>No Data Available Add Student To Display Data</h3>

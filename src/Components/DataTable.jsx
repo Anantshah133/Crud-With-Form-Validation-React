@@ -9,9 +9,10 @@ export default function DataTable({ data, handleDelete }) {
                 <tr>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Password</th>
+                    <th>Date</th>
                     <th>Phone</th>
                     <th>Degree</th>
+                    <th>Marks</th>
                     <th>State</th>
                     <th>City</th>
                     <th>Gender</th>
@@ -25,9 +26,10 @@ export default function DataTable({ data, handleDelete }) {
                     return <tr key={idx}>
                         <td>{userData.name}</td>
                         <td>{userData.email}</td>
-                        <td>{userData.password}</td>
+                        <td>{userData.date}</td>
                         <td>{userData.phone}</td>
                         <td>{userData.degree}</td>
+                        <td>{userData.marks}</td>
                         <td>{userData.state}</td>
                         <td>{userData.city}</td>
                         <td>{userData.gender === "male" ? "♂️ Male" : userData.gender === "female" ? "♀️ Female" : "⚧ Other"}</td>
