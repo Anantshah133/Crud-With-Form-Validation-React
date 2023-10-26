@@ -369,7 +369,7 @@ p {
 
 
 .color-primary{
-    color: #31285C;
+    color: #31285C !important;
 }
 .background-primary{
     background-color: #31285C !important;
@@ -381,3 +381,10 @@ p {
     background-color: #fff !important;
     border: 1px solid #31285C;
 }
+
+.color-secondary{
+    color: #fb7d5b !important;
+}
+
+
+

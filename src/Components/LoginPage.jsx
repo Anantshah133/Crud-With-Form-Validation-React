@@ -11,10 +11,9 @@ export default function LoginPage({ handleLogin }) {
     const [errors, setErrors] = useState({})
     const navigate = useNavigate();
     const userData = JSON.parse(localStorage.getItem("User-Data")) || [];
-
+    
     const handleSubmit = (e) => {
         e.preventDefault();
-        // get Localstorage here 
         let validationErrors = {};
         if (!input.email.trim()) {
             validationErrors.email = "Please Enter Your Email !!!";
@@ -23,7 +22,7 @@ export default function LoginPage({ handleLogin }) {
             validationErrors.password = "Please Enter Your Password !!!";
         }
         setErrors(validationErrors);
-
+        
         if (Object.keys(validationErrors).length === 0) {
             const user = userData.find((u) => u.email === input.email && u.password === input.password)
             if (user) {
