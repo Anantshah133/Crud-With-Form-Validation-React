@@ -39,9 +39,9 @@ export default function DataTable({ data, handleDelete }) {
                             <Link type='button' className='action-btn btn btn-warning me-3' to={`/students/view/${idx}`}>
                                 <i className="fa-solid fa-eye"></i>
                             </Link>
-                            <button type='button' className='action-btn btn btn-success me-3'>
+                            <Link type='button' className='action-btn btn btn-success me-3' to={`/students/edit/${idx}`}>
                                 <i className="ri-pencil-line"></i>
-                            </button>
+                            </Link>
                             <button type='button' className='action-btn btn btn-danger me-3' onClick={(e) => handleDelete(e, idx)}>
                                 <i className="ri-close-line"></i>
                             </button>

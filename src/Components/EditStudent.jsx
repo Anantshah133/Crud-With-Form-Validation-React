@@ -1,10 +1,22 @@
 import React, { useEffect, useState, useRef } from 'react';
 import cityData from './cityData';
 import "../Components/style.css";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-export default function CrudForm() {
+
+export default function EditStudent() {
+    const urlParam = useParams();
+    const idx = urlParam.id;
     const navigate = useNavigate();
+    const [data, setData] = useState(() => {
+        try {
+            let storedData = localStorage.getItem("Student-Data");
+            return JSON.parse(storedData) ? JSON.parse(storedData) : [];
+        } catch (error) {
+            console.error("Error While Parsing data from Local storage ...");
+            return [];
+        }
+    });
     const [isSelected, setIsSelected] = useState(false);
     const [selectedState, setSelectedState] = useState('');
     const [selectedGender, setSelectedGender] = useState('')
@@ -15,15 +27,17 @@ export default function CrudForm() {
         name: '', email: '', date: '', marks: '', phone: '', degree: '',
         state: '', city: '', gender: '', address: '', hobbies: '',
     });
-    const [data, setData] = useState(() => {
-        try {
-            let storedData = localStorage.getItem("Student-Data");
-            return JSON.parse(storedData) ? JSON.parse(storedData) : [];
-        } catch (error) {
-            console.error("Error While Parsing data from Local storage ...");
-            return [];
+
+
+    useEffect(() => {
+        const editStudent = data.find((student, index) => index === parseInt(idx));
+        if (editStudent) {
+            setInput({ ...editStudent });
+            setSelectedGender(editStudent.gender);
+            setSelectedState(editStudent.state);
+            setIsSelected(true);
         }
-    });
+    }, [idx, data])
 
     useEffect(() => {
         setCities(cityData[selectedState] || [])
@@ -47,15 +61,7 @@ export default function CrudForm() {
         setSelectedState(e.target.value);
         setIsSelected(e.target.value === '' ? false : true)
     }
-    console.log(input)
-    // const handleEdit = (e, idx) => {
-    //     setEditId(idx)
-    //     setIsEdit(true);
-    //     setInput(data[idx])
-    //     setSelectedGender(data[idx].gender)
-    //     setSelectedState(data[idx].state)
-    //     setIsSelected(true);
-    // }
+
     const validateDateOfBirth = () => {
         const birthDate = new Date(input.date);
         const currentDate = new Date();
@@ -81,25 +87,28 @@ export default function CrudForm() {
         if (!input.hobbies.trim()) {
             validationErrors.hobbies = "Please Enter your Hobbies !!!";
         }
-        if(!validateDateOfBirth()){
+        if (!validateDateOfBirth()) {
             return;
         }
         setErrors(validationErrors);
 
-        if(Object.keys(validationErrors).length > 0){
+        if (Object.keys(validationErrors).length > 0) {
             return;
         }
-        setData([...data, input])
-        localStorage.setItem("Student-Data", JSON.stringify([...data, input]))
-        handleReset()
+
+        const newData = [...data];
+        newData[idx] = input;
+        setData(newData);
+        localStorage.setItem("Student-Data", JSON.stringify(newData));
+        handleReset();
         formRef.current.reset();
-        navigate('/students')
+        navigate('/students');
     }
 
     const stateList = Object.keys(cityData);
     return (
         <center>
-            <h1 className='my-3 color-primary'>Add Student Data</h1>
+            <h1 className='my-3 color-primary'>Edit Student Data</h1>
             <br />
             <form action="" onSubmit={handleSubmit} className='container' ref={formRef}>
                 {/* --------------------- name & email ----------------------- */}
@@ -206,7 +215,7 @@ export default function CrudForm() {
                 </div>
 
 
-                <button className='btn btn-primary background-primary mt-5' type='submit'>{"Submit"}</button>
+                <button className='btn btn-primary background-primary mt-5' type='submit'>{"Update"}</button>
             </form>
         </center>
     )

@@ -9,6 +9,7 @@ import Home from './Home';
 import Dashboard from './Dashboard';
 import StudentsTable from './StudentsTable';
 import ViewStudent from './ViewStudent';
+import EditStudent from './EditStudent';
 
 export default function MainComponent() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
@@ -41,7 +42,8 @@ export default function MainComponent() {
         <Route path='/login' element={<LoginPage handleLogin={handleLogin} />} />
         <Route path="/add-student" element={<CrudForm />} />
         <Route path='/students' element={<StudentsTable />} />
-        <Route path='/students/view/:id' element={<ViewStudent />} />
+        <Route path='/students/view/:id' element={isLoggedIn ? <ViewStudent /> : <Home />} />
+        <Route path='/students/edit/:id' element={isLoggedIn ? <EditStudent /> : <Home />} />
       </Routes>
     </BrowserRouter>
   )
