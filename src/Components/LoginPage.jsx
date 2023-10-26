@@ -43,8 +43,8 @@ export default function LoginPage({ handleLogin }) {
                         clearInterval(timerInterval)
                     }
                 }).then((result) => {
+                    navigate('/')
                     handleLogin()
-                    navigate('/add-student')
                 })
             } else {
                 Swal.fire({

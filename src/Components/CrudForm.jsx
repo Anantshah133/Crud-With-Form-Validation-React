@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useRef } from 'react';
 import cityData from './cityData';
 import "../Components/style.css";
+import { useNavigate } from 'react-router-dom';
 // import DataTable from './DataTable';
 
 export default function CrudForm() {
     // const [editId, setEditId] = useState(null);
     const [isSelected, setIsSelected] = useState(false);
+    const navigate = useNavigate();
     // const [isEdit, setIsEdit] = useState(false);
     const [selectedState, setSelectedState] = useState('');
     const [selectedGender, setSelectedGender] = useState('')
@@ -86,7 +88,7 @@ export default function CrudForm() {
         if(Object.keys(validationErrors).length > 0){
             return;
         }
-
+        navigate('/students')
         // if (isEdit) {
         //     const newList = data.map((user, idx) => {
         //         if (editId === idx) {
@@ -102,7 +104,6 @@ export default function CrudForm() {
         // } else {
         setData([...data, input])
         // }
-
         handleReset()
         formRef.current.reset();
     }

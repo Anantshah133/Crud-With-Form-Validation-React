@@ -35,7 +35,7 @@ export default function MainComponent() {
       <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
       <Routes>
         <Route path="*" element={<Error404Page />} />
-        <Route path='/' element={<Home />} />
+        <Route path='/' element={isLoggedIn ?  <Dashboard /> : <Home />} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/sign-up' element={<SignUpPage />} />
         <Route path='/login' element={<LoginPage handleLogin={handleLogin} />} />

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import DataTable from './DataTable';
+import { Link } from 'react-router-dom';
 
 
 export default function StudentsTable() {
@@ -27,6 +28,9 @@ export default function StudentsTable() {
                 {
                     data.length > 0 ? <DataTable data={data} handleDelete={handleDelete} /> : <h3 className='color-primary'>No Data Available</h3>
                 }
+            </div>
+            <div className='d-flex justify-content-center mt-5'>
+                <Link className='btn btn-primary background-primary text-center' to={'/add-student'} >Add Student Data</Link>    
             </div>
         </>
     )
