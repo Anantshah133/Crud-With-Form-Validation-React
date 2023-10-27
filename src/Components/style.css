@@ -388,3 +388,10 @@ p {
 
 
 
+.search-control{
+    border: 2px solid #c4c4c4 !important;
+}
+.search-control:focus{
+    box-shadow: none !important;
+    border: 2px solid #31285C !important;
+}

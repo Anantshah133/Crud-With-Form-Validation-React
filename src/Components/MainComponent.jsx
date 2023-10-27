@@ -22,7 +22,6 @@ export default function MainComponent() {
   });
   useEffect(() => {
     localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));
-    console.log()
   }, [isLoggedIn])
   const handleLogin = () => {
     setIsLoggedIn(true)
@@ -30,7 +29,7 @@ export default function MainComponent() {
   const handleLogout = () => {
     setIsLoggedIn(false)
   }
-  console.log(isLoggedIn)
+  // console.log(isLoggedIn)
   return (
     <BrowserRouter>
       <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />

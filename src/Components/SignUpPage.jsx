@@ -17,6 +17,7 @@ export default function SignUpPage() {
             return [];
         }
     })
+    
     useEffect(() => {
         localStorage.setItem("User-Data", JSON.stringify(userData));
     }, [userData])
