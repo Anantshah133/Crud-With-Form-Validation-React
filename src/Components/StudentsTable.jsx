@@ -17,6 +17,7 @@ export default function StudentsTable() {
     const [filteredData, setFilteredData] = useState(data);
     const [filterGender, setFilterGender] = useState('ALL');
     const [filterOption, setFilterOption] = useState('');
+    const [sortOption, setSortOption] = useState(''); // Initialize sorting option
     const searchableFields = ['name', 'email', 'degree', 'state', 'city', 'hobbies', 'address'];
 
     useEffect(() => {
@@ -38,8 +39,8 @@ export default function StudentsTable() {
         setFilterGender(selectedGender);
     }
 
-    const handleFilterChange = (e) => {
-        setFilterOption(e.target.value);
+    const handleSortChange = (e) => {
+        setSortOption(e.target.value);
     }
 
     useEffect(() => {
@@ -52,47 +53,60 @@ export default function StudentsTable() {
 
             return isGenderMatch && isSearchMatch;
         });
+
+        if (sortOption) {
+            filtered.sort((a, b) => {
+                if (a[sortOption] < b[sortOption]) {
+                    return -1;
+                }
+                if (a[sortOption] > b[sortOption]) {
+                    return 1;
+                }
+                return 0;
+            });
+        }
+
         setFilteredData(filtered);
-    }, [searchText, filterGender, data]);
+    }, [searchText, filterGender, filterOption, sortOption, data]);
 
     return (
         <>
-            <h1 className='color-primary mt-5 text-center'>Students List</h1>
+            <h1 className='color-primary mt-5 text-center fs-1'>Students List</h1>
             <div className="col-10 mx-auto mt-5 overflow-x-scroll mt-4 data-table">
-                <label htmlFor="#srch"><h3>Search Students Here : </h3></label>
-                <input type="text" placeholder="Search by Name, Email, Hobbies, Address, etc." value={searchText} onChange={handleSearchChange} className="form-control mb-3 search-control" id='srch' autoComplete='off'/>
+                <label htmlFor="#srch"><h2 className='color-primary fs-3'>Search Students Here : </h2></label>
+                <input type="text" placeholder="Search by Name, Email, Hobbies, Address, etc." value={searchText} onChange={handleSearchChange} className="form-control mb-4 search-control" id='srch' autoComplete='off' />
 
-                <div className="filter-controls">
+                <h2 className='color-primary fs-3'>Filter By Gender</h2>
+                <div className="filter-controls d-flex gap-5 mb-4">
                     <div>
-                        <label>
-                            <input type="radio" value="ALL" checked={filterGender === 'ALL'} onChange={handleGenderChange} />
+                        <label className='fs-5'>
+                            <input type="radio" value="ALL" checked={filterGender === 'ALL'} onChange={handleGenderChange} className='me-2' />
                             ALL
                         </label>
                     </div>
                     <div>
-                        <label>
-                            <input type="radio" value="MALE" checked={filterGender === 'MALE'} onChange={handleGenderChange} />
+                        <label className='fs-5'>
+                            <input type="radio" value="MALE" checked={filterGender === 'MALE'} onChange={handleGenderChange} className='me-2' />
                             MALE
                         </label>
                     </div>
                     <div>
-                        <label>
-                            <input type="radio" value="FEMALE" checked={filterGender === 'FEMALE'} onChange={handleGenderChange} />
+                        <label className='fs-5'>
+                            <input type="radio" value="FEMALE" checked={filterGender === 'FEMALE'} onChange={handleGenderChange} className='me-2' />
                             FEMALE
                         </label>
                     </div>
                 </div>
-
-                <div className="filter-controls">
+                <div className="filter-controls mb-4 col-3">
                     <label>
-                        Filter by:
-                        <select value={filterOption} onChange={handleFilterChange}>
-                            <option value="">Select</option>
-                            <option value="name">Name</option>
-                            <option value="address">Address</option>
-                            <option value="marks">Marks</option>
-                        </select>
+                        <h2 className='color-primary fs-3'>Sort by:</h2>
                     </label>
+                    <select value={sortOption} onChange={handleSortChange} className='col-12'>
+                        <option value="">Select</option>
+                        <option value="name">Name</option>
+                        <option value="address">Address</option>
+                        <option value="marks">Marks</option>
+                    </select>
                 </div>
 
                 {

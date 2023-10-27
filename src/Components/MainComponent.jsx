@@ -29,7 +29,6 @@ export default function MainComponent() {
   const handleLogout = () => {
     setIsLoggedIn(false)
   }
-  // console.log(isLoggedIn)
   return (
     <BrowserRouter>
       <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
