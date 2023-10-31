@@ -49,8 +49,19 @@ export default function Navbar({ isLoggedIn, handleLogout }) {
                             <Link className="nav-link active" aria-current="page" to={'/'}>Home</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link active" aria-current="page" to={'/students'}>Students</Link>
+                            <Link className="nav-link active" aria-current="page" to={'/about'}>About</Link>
                         </li>
+                        <li className="nav-item">
+                            <Link className="nav-link active" aria-current="page" to={'/contact'}>Contact</Link>
+                        </li>
+                        {
+                            isLoggedIn ? (
+                                <li className="nav-item">
+                                    <Link className="nav-link active" aria-current="page" to={'/students'}>Students</Link>
+                                </li>
+                            ) : <li></li>
+                        }
+
                     </ul>
                     {isLoggedIn ? (
                         <button className="btn btn-outline-light" type="button" onClick={onLogout}>

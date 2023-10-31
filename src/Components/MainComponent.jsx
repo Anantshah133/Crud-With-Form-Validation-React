@@ -10,6 +10,8 @@ import Dashboard from './Dashboard';
 import StudentsTable from './StudentsTable';
 import ViewStudent from './ViewStudent';
 import EditStudent from './EditStudent';
+import Contact from './Contact';
+import About from './About';
 
 export default function MainComponent() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
@@ -35,6 +37,8 @@ export default function MainComponent() {
       <Routes>
         <Route path="*" element={<Error404Page />} />
         <Route path='/' element={isLoggedIn ?  <Dashboard /> : <Home />} />
+        <Route path='/contact' element={<Contact />} />
+        <Route path='/about' element={<About />} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/sign-up' element={<SignUpPage />} />
         <Route path='/login' element={<LoginPage handleLogin={handleLogin} />} />
